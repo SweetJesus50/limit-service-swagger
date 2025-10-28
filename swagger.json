@@ -1,0 +1,1449 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Limit Service API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/"
+    }
+  ],
+  "paths": {
+    "/api/v1/limits/check": {
+      "post": {
+        "tags": ["Limit Service"],
+        "summary": "Limits Check",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LimitsCheckRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Limits Check",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LimitsCheckResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unsuccessful Limits Check",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": 1,
+                  "errMessage": "Limit exceeded for CLIENT"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/settings/add-limit-rule": {
+      "post": {
+        "tags": ["Limit Rules"],
+        "summary": "Add new limit rule",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddLimitRuleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/settings/update-limit-rule": {
+      "put": {
+        "tags": ["Limit Rules"],
+        "summary": "Update existing limit rule",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLimitRuleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/retrieve": {
+      "get": {
+        "tags": ["Limit Rules"],
+        "summary": "Get all existing limit rules",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetLimitRuleResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/retrieve/{id}": {
+      "get": {
+        "tags": ["Limit Rules"],
+        "summary": "Get limit rule by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "ID of limit rule"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetLimitRuleResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/retrieve/page": {
+      "get": {
+        "tags": ["Limit Rules"],
+        "summary": "Get limit rules page",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Size of the page",
+            "example": 10
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of the page",
+            "example": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetLimitRuleResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/settings/activate": {
+      "post": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Activate merchant limit rule  ",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivateMerchantLimitRuleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/settings/deactivate": {
+      "post": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Deactivate merchant limit rule  ",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeactivateMerchantLimitRuleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/settings/add-merchant-limit-rule": {
+      "post": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Add merchant limit rule",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddMerchantLimitRuleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/settings/update-merchant-limit-rule": {
+      "put": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Update merchant limit rule",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMerchantLimitRuleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/settings/update/is-active": {
+      "patch": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Update isActive in merchant limit rule",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMerchantLimitRuleIsActiveRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/settings/update/start-date": {
+      "patch": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Update startDate in merchant limit rule",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMerchantLimitRuleStartDateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/settings/update/end-date": {
+      "patch": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Update endDate in merchant limit rule",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMerchantLimitRuleEndDateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/settings/update/priority": {
+      "patch": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Update priority in merchant limit rule",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMerchantLimitRulePriorityRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/settings/update/description": {
+      "patch": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Update description in merchant limit rule",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMerchantLimitRuleDescriptionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/retrieve": {
+      "get": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Get all existing merchant limit rules",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetMerchantLimitRuleRequest"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/retrieve/{id}": {
+      "get": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Get merchant limit rule by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "ID of limit rule"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMerchantLimitRuleRequest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/limit-rules/merchant/retrieve/page": {
+      "get": {
+        "tags": ["Merchant Limit Rules"],
+        "summary": "Get merchant limit rules page",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Size of the page",
+            "example": 10
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of the page",
+            "example": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetMerchantLimitRuleRequest"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/summary/merchant": {
+      "get": {
+        "tags": ["Merchant Daily Summary"],
+        "summary": "Get merchant daily summary by merchantId and periodStart",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "Merchant ID",
+            "example": 242
+          },
+          {
+            "name": "periodStart",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YYYY-MM-DD"
+            },
+            "description": "Period start date",
+            "example": "2025-10-28"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/GetMerchantDailySummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/summary/merchant/all": {
+      "post": {
+        "tags": ["Merchant Daily Summary"],
+        "summary": "Get merchant daily summaries",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetMerchantDailySummaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetMerchantDailySummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/summary/merchant/page": {
+      "get": {
+        "tags": ["Merchant Daily Summary"],
+        "summary": "Get merchant daily summaries page",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Size of the page",
+            "example": 10
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of the page",
+            "example": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetMerchantDailySummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/summary/client": {
+      "get": {
+        "tags": ["Client Daily Summary"],
+        "summary": "Get client daily summary by clientId and periodStart",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Client ID",
+            "example": "52212345678901"
+          },
+          {
+            "name": "periodStart",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YYYY-MM-DD"
+            },
+            "description": "Period start date",
+            "example": "2025-10-28"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/GetClientDailySummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/summary/client/all": {
+      "post": {
+        "tags": ["Client Daily Summary"],
+        "summary": "Get client daily summaries",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetClientDailySummaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetClientDailySummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/summary/client/page": {
+      "get": {
+        "tags": ["Client Daily Summary"],
+        "summary": "Get client daily summaries page",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Size of the page",
+            "example": 10
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of the page",
+            "example": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetClientDailySummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/summary/card": {
+      "get": {
+        "tags": ["Card Daily Summary"],
+        "summary": "Get card daily summary by cardId and periodStart",
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Card ID",
+            "example": "9860350112345678"
+          },
+          {
+            "name": "periodStart",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "YYYY-MM-DD"
+            },
+            "description": "Period start date",
+            "example": "2025-10-28"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/GetCardDailySummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/summary/card/all": {
+      "post": {
+        "tags": ["Card Daily Summary"],
+        "summary": "Get card daily summaries",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetCardDailySummaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetCardDailySummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/summary/card/page": {
+      "get": {
+        "tags": ["Card Daily Summary"],
+        "summary": "Get card daily summaries page",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Size of the page",
+            "example": 10
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of the page",
+            "example": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetCardDailySummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    },
+    "schemas": {
+      "LimitsCheckRequest": {
+        "type": "object",
+        "properties": {
+          "octo_shop_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "octo_payout_UUID": {
+            "type": "string",
+            "example": "356e0e55-b25e-4209-8784-b809c0bdc3e7"
+          },
+          "pinfl": {
+            "type": "string",
+            "example": "52212345678901"
+          },
+          "pan": {
+            "type": "string",
+            "example": "9860350112345678"
+          },
+          "currency": {
+            "type": "integer",
+            "example": 860
+          },
+          "total_amount": {
+            "type": "number",
+            "description": "A monetary amount with high precision, represented as a BigDecimal.",
+            "example": 1000.00
+          }
+        },
+        "required": [
+          "octo_shop_id",
+          "octo_payout_UUID",
+          "pinfl",
+          "pan",
+          "currency",
+          "total_amount"
+        ]
+      },
+      "LimitsCheckResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "example": 0
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "AddLimitRuleRequest": {
+        "type": "object",
+        "properties": {
+          "limitCount": {
+            "type": "integer",
+            "example": 10
+          },
+          "limitSum": {
+            "type": "number",
+            "example": 10000000
+          },
+          "limitDays": {
+            "type": "number",
+            "example": 20
+          },
+          "appliesTo": {
+            "type": "string",
+            "example": "CLIENT"
+          },
+          "description": {
+            "type": "string",
+            "example": "Limit rule for sum (UZS) and operations count for 20 days"
+          },
+          "limitType": {
+            "type": "string",
+            "example": "period_sum_count"
+          },
+          "currency": {
+            "type": "integer",
+            "example": 860
+          }
+        },
+        "required": [
+          "limitCount",
+          "limitSum",
+          "limitDays",
+          "appliesTo",
+          "description",
+          "limitType",
+          "currency"
+        ]
+      },
+      "UpdateLimitRuleRequest": {
+        "type": "object",
+        "properties": {
+          "limitRuleId": {
+            "type": "string",
+            "format": "uri",
+            "example": 1
+          },
+          "limitCount": {
+            "type": "integer",
+            "example": 10
+          },
+          "limitSum": {
+            "type": "number",
+            "example": 10000000
+          },
+          "limitDays": {
+            "type": "number",
+            "example": 20
+          },
+          "appliesTo": {
+            "type": "string",
+            "example": "CLIENT"
+          },
+          "description": {
+            "type": "string",
+            "example": "Limit rule for sum (UZS) and operations count for 20 days"
+          },
+          "limitType": {
+            "type": "string",
+            "example": "period_sum_count"
+          },
+          "currency": {
+            "type": "integer",
+            "example": 860
+          }
+        },
+        "required": [
+          "limitRuleId",
+          "limitCount",
+          "limitSum",
+          "limitDays",
+          "appliesTo",
+          "description",
+          "limitType",
+          "currency"
+        ]
+      },
+      "GetLimitRuleResponse": {
+        "type": "object",
+        "properties": {
+          "limitCount": {
+            "type": "integer",
+            "example": 10
+          },
+          "limitSum": {
+            "type": "number",
+            "example": 10000000
+          },
+          "limitDays": {
+            "type": "number",
+            "example": 20
+          },
+          "appliesTo": {
+            "type": "string",
+            "example": "CLIENT"
+          },
+          "description": {
+            "type": "string",
+            "example": "Limit rule for sum (UZS) and operations count for 20 days"
+          },
+          "limitType": {
+            "type": "string",
+            "example": "period_sum_count"
+          },
+          "currency": {
+            "type": "integer",
+            "example": 860
+          }
+        },
+        "required": [
+          "limitCount",
+          "limitSum",
+          "limitDays",
+          "appliesTo",
+          "description",
+          "limitType",
+          "currency"
+        ]
+      },
+      "ActivateMerchantLimitRuleRequest": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "limitRuleId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          }
+        },
+        "required": [
+          "merchantId",
+          "limitRuleId"
+        ]
+      },
+      "DeactivateMerchantLimitRuleRequest": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "limitRuleId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          }
+        },
+        "required": [
+          "merchantId",
+          "limitRuleId"
+        ]
+      },
+      "AddMerchantLimitRuleRequest": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "limitRuleId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          },
+          "startDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          },
+          "endDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          },
+          "priority": {
+            "type": "integer",
+            "example": 1,
+            "description": "From 1 to 10. 1 - highest, 10 - lowest."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of merchant limit rule (up to 255 characters)."
+          }
+        },
+        "required": [
+          "merchantId",
+          "limitRuleId",
+          "priority",
+          "description"
+        ]
+      },
+      "UpdateMerchantLimitRuleRequest": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "limitRuleId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          },
+          "startDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          },
+          "endDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          },
+          "priority": {
+            "type": "integer",
+            "example": 1,
+            "description": "From 1 to 10. 1 - highest, 10 - lowest."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of merchant limit rule (up to 255 characters)."
+          }
+        },
+        "required": [
+          "merchantId",
+          "limitRuleId",
+          "isActive",
+          "startDate",
+          "endDate",
+          "priority",
+          "description"
+        ]
+      },
+      "UpdateMerchantLimitRuleIsActiveRequest": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "limitRuleId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "required": [
+          "merchantId",
+          "limitRuleId",
+          "isActive"
+        ]
+      },
+      "UpdateMerchantLimitRuleStartDateRequest": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "limitRuleId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "startDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          }
+        },
+        "required": [
+          "merchantId",
+          "limitRuleId",
+          "startDate"
+        ]
+      },
+      "UpdateMerchantLimitRuleEndDateRequest": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "limitRuleId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "endDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          }
+        },
+        "required": [
+          "merchantId",
+          "limitRuleId",
+          "endDate"
+        ]
+      },
+      "UpdateMerchantLimitRuleDescriptionRequest": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "limitRuleId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of merchant limit rule (up to 255 characters)."
+          }
+        },
+        "required": [
+          "merchantId",
+          "limitRuleId",
+          "description"
+        ]
+      },
+      "UpdateMerchantLimitRulePriorityRequest": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "limitRuleId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "priority": {
+            "type": "integer",
+            "example": 1,
+            "description": "From 1 to 10. 1 - highest, 10 - lowest."
+          }
+        },
+        "required": [
+          "merchantId",
+          "limitRuleId",
+          "priority"
+        ]
+      },
+      "GetMerchantLimitRuleRequest": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "limitRuleId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          },
+          "startDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          },
+          "endDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          },
+          "priority": {
+            "type": "integer",
+            "example": 1,
+            "description": "From 1 to 10. 1 - highest, 10 - lowest."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of merchant limit rule (up to 255 characters)."
+          }
+        },
+        "required": [
+          "merchantId",
+          "limitRuleId",
+          "priority",
+          "description"
+        ]
+      },
+      "GetMerchantDailySummaryRequest": {
+        "type": "object",
+        "properties": {
+          "merchantPeriod": {
+            "type": "object",
+            "properties": {
+              "<merchantId> e.g. 242": {
+                "type": "string",
+                "example": "<period> e.g. 2025-10-28"
+              }
+            }
+          }
+        },
+        "required": [
+          "merchantPeriod"
+        ]
+      },
+      "GetClientDailySummaryRequest": {
+        "type": "object",
+        "properties": {
+          "clientPeriod": {
+            "type": "object",
+            "properties": {
+              "<clientId> e.g. 52212345678901": {
+                "type": "string",
+                "example": "<period> e.g. 2025-10-28"
+              }
+            }
+          }
+        },
+        "required": [
+          "clientPeriod"
+        ]
+      },
+      "GetCardDailySummaryRequest": {
+        "type": "object",
+        "properties": {
+          "cardPeriod": {
+            "type": "object",
+            "properties": {
+              "<cardId> e.g. 9860350112345678": {
+                "type": "string",
+                "example": "<period> e.g. 2025-10-28"
+              }
+            }
+          }
+        },
+        "required": [
+          "cardPeriod"
+        ]
+      },
+      "GetMerchantDailySummaryResponse": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "periodStart": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          },
+          "totalSum": {
+            "type": "number",
+            "description": "BigDecimal",
+            "example": 20000000
+          },
+          "totalCount": {
+            "type": "integer",
+            "example": "10"
+          }
+        },
+        "required": [
+          "merchantId",
+          "periodStart",
+          "totalSum",
+          "totalCount"
+        ]
+      },
+      "GetClientDailySummaryResponse": {
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "type": "string",
+            "example": "5221 *** *** ** 01"
+          },
+          "periodStart": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          },
+          "totalSum": {
+            "type": "number",
+            "description": "BigDecimal",
+            "example": 20000000
+          },
+          "totalCount": {
+            "type": "integer",
+            "example": "10"
+          }
+        },
+        "required": [
+          "clientId",
+          "periodStart",
+          "totalSum",
+          "totalCount"
+        ]
+      },
+      "GetCardDailySummaryResponse": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "example": "986035 *** *** 5678"
+          },
+          "periodStart": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          },
+          "totalSum": {
+            "type": "number",
+            "description": "BigDecimal",
+            "example": 20000000
+          },
+          "totalCount": {
+            "type": "integer",
+            "example": "10"
+          }
+        },
+        "required": [
+          "cardId",
+          "periodStart",
+          "totalSum",
+          "totalCount"
+        ]
+      }
+    }
+  },
+  "security": [
+    { "basicAuth": [] }
+  ]
+}

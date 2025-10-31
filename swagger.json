@@ -49,6 +49,28 @@
         }
       }
     },
+    "/api/v1/limits/revert": {
+      "post": {
+        "tags": ["Limit Service"],
+        "summary": "Limits Revert On Unsuccessful Payout",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LimitsRevertRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Limits Revert",
+            "content": {}
+          }
+        }
+      }
+    },
     "/api/v1/limit-rules/settings/add-limit-rule": {
       "post": {
         "tags": ["Limit Rules"],
@@ -862,6 +884,50 @@
             "type": "number",
             "description": "A monetary amount with high precision, represented as a BigDecimal.",
             "example": 1000.00
+          }
+        },
+        "required": [
+          "octo_shop_id",
+          "octo_payout_UUID",
+          "pinfl",
+          "pan",
+          "currency",
+          "total_amount"
+        ]
+      },
+      "LimitsRevertRequest": {
+        "type": "object",
+        "properties": {
+          "octo_shop_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 242
+          },
+          "octo_payout_UUID": {
+            "type": "string",
+            "example": "356e0e55-b25e-4209-8784-b809c0bdc3e7"
+          },
+          "pinfl": {
+            "type": "string",
+            "example": "52212345678901"
+          },
+          "pan": {
+            "type": "string",
+            "example": "9860350112345678"
+          },
+          "currency": {
+            "type": "integer",
+            "example": 860
+          },
+          "total_amount": {
+            "type": "number",
+            "description": "A monetary amount with high precision, represented as a BigDecimal.",
+            "example": 1000.00
+          },
+          "periodStart": {
+            "type": "string",
+            "format": "YYYY-MM-DD",
+            "example": "2025-10-31"
           }
         },
         "required": [

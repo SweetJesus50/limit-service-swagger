@@ -924,7 +924,7 @@
             "description": "A monetary amount with high precision, represented as a BigDecimal.",
             "example": 1000.00
           },
-          "periodStart": {
+          "period_start": {
             "type": "string",
             "format": "YYYY-MM-DD",
             "example": "2025-10-31"
@@ -936,7 +936,8 @@
           "pinfl",
           "pan",
           "currency",
-          "total_amount"
+          "total_amount",
+          "period_start"
         ]
       },
       "LimitsCheckResponse": {

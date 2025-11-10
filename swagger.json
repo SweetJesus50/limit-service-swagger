@@ -535,7 +535,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                    "$ref": "#/components/schemas/GetMerchantDailySummaryResponse"
+                  "$ref": "#/components/schemas/GetMerchantDailySummaryResponse"
                 }
               }
             }
@@ -552,7 +552,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetMerchantDailySummaryRequest"
+                  "$ref": "#/components/schemas/GetMerchantDailySummaryRequest"
               }
             }
           }
@@ -650,7 +650,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                    "$ref": "#/components/schemas/GetClientDailySummaryResponse"
+                  "$ref": "#/components/schemas/GetClientDailySummaryResponse"
                 }
               }
             }
@@ -667,7 +667,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetClientDailySummaryRequest"
+                  "$ref": "#/components/schemas/GetClientDailySummaryRequest"
               }
             }
           }
@@ -765,7 +765,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                    "$ref": "#/components/schemas/GetCardDailySummaryResponse"
+                  "$ref": "#/components/schemas/GetCardDailySummaryResponse"
                 }
               }
             }
@@ -782,7 +782,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetCardDailySummaryRequest"
+                  "$ref": "#/components/schemas/GetCardDailySummaryRequest"
               }
             }
           }
@@ -1375,52 +1375,92 @@
       "GetMerchantDailySummaryRequest": {
         "type": "object",
         "properties": {
-          "merchantPeriod": {
-            "type": "object",
-            "properties": {
-              "<merchantId> e.g. 242": {
-                "type": "string",
-                "example": "<period> e.g. 2025-10-28"
+          "merchantDailySummariesData": {
+            "type": "array",
+            "example": [
+              {
+                "merchantId": 242,
+                "periodStartDate": "2025-11-10"
               }
+            ],
+            "items": {
+              "type": "object",
+              "properties": {
+                "merchantId": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "periodStartDate": {
+                  "type": "string",
+                  "format": "date"
+                }
+              },
+              "required": [
+                "merchantId",
+                "periodStartDate"
+              ]
             }
           }
         },
-        "required": [
-          "merchantPeriod"
-        ]
+        "required": ["merchantDailySummariesData"]
       },
       "GetClientDailySummaryRequest": {
         "type": "object",
         "properties": {
-          "clientPeriod": {
-            "type": "object",
-            "properties": {
-              "<clientId> e.g. 52212345678901": {
-                "type": "string",
-                "example": "<period> e.g. 2025-10-28"
+          "clientDailySummariesData": {
+            "type": "array",
+            "example": [
+              {
+                "clientId": "52212345678901",
+                "periodStartDate": "2025-11-10"
               }
-            }
+            ],
+            "properties": {
+              "clientId": {
+                "type": "string",
+                "example": "52212345678901"
+              },
+              "periodStartDate": {
+                "type": "string",
+                "example": "2025-11-10"
+              }
+            },
+            "required": ["clientId", "periodStartDate"]
           }
         },
         "required": [
-          "clientPeriod"
+          "clientDailySummariesData"
         ]
       },
       "GetCardDailySummaryRequest": {
         "type": "object",
         "properties": {
-          "cardPeriod": {
-            "type": "object",
-            "properties": {
-              "<cardId> e.g. 9860350112345678": {
-                "type": "string",
-                "example": "<period> e.g. 2025-10-28"
+          "cardDailySummariesData": {
+            "type": "array",
+            "example": [
+              {
+                "cardId": "986035011234567890",
+                "periodStartDate": "2025-11-10"
               }
+            ],
+            "items": {
+              "type": "object",
+              "properties": {
+                "cardId": {
+                  "type": "string",
+                  "example": "986035011234567890"
+                },
+                "periodStartDate": {
+                  "type": "string",
+                  "example": "2025-11-10"
+                }
+              },
+              "required": ["cardId", "periodStartDate"]
             }
           }
         },
         "required": [
-          "cardPeriod"
+          "cardDailySummariesData"
         ]
       },
       "GetMerchantDailySummaryResponse": {

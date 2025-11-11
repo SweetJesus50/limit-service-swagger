@@ -554,7 +554,7 @@
         }
       }
     },
-    "/api/v1/summary/merchant/all": {
+    "/api/v1/summary/merchant/by-list": {
       "post": {
         "tags": ["Merchant Daily Summary"],
         "summary": "Get merchant daily summaries",
@@ -680,7 +680,7 @@
         }
       }
     },
-    "/api/v1/summary/client/all": {
+    "/api/v1/summary/client/by-list": {
       "post": {
         "tags": ["Client Daily Summary"],
         "summary": "Get client daily summaries",
@@ -806,7 +806,7 @@
         }
       }
     },
-    "/api/v1/summary/card/all": {
+    "/api/v1/summary/card/by-list": {
       "post": {
         "tags": ["Card Daily Summary"],
         "summary": "Get card daily summaries",
